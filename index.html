@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecoleta — Descarte consciente de lixo eletrônico</title>
+<meta name="description" content="A Ecoleta conecta você a pontos de coleta certificados para dar destino correto a celulares, computadores, baterias e eletrodomésticos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+/* ============ BASE ============ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --paper:#F4EFE2;        /* bege claro — fundo geral */
+  --paper-2:#ECE5D2;      /* bege médio */
+  --card:#FBF8EF;         /* superfícies */
+  --line:#DCD4BC;         /* bordas */
+  --ink:#232A23;          /* cinza-quase-preto (texto) */
+  --gray:#5C635B;         /* cinza texto secundário */
+  --gray-2:#8A9087;       /* cinza claro */
+  --green-900:#182B1E;
+  --green-800:#1E3325;    /* verde profundo */
+  --green:#2F6B3F;        /* verde principal */
+  --green-mid:#3F8A50;
+  --green-bright:#57A66B;
+  --green-mint:#8FD9A0;   /* destaque claro (em fundos escuros) */
+  --green-soft:#E7EEDF;
+  --terra:#C05A32;        /* erro — terracota terroso */
+  --radius:22px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Archivo',sans-serif;background:var(--paper);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+::selection{background:var(--green-800);color:var(--paper)}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+section{scroll-margin-top:92px}
+.container{max-width:1180px;margin:0 auto;padding:0 24px}
+.section{padding:96px 0}
+
+/* ============ TIPOGRAFIA / CABEÇALHOS DE SEÇÃO ============ */
+.eyebrow{font:600 .72rem/1 'Archivo';letter-spacing:.2em;text-transform:uppercase;color:var(--green);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'';width:26px;height:2px;background:var(--green)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:56px}
+.section-title{font-family:'Fraunces',serif;font-size:clamp(1.9rem,3.2vw,2.75rem);font-weight:600;letter-spacing:-.01em;line-height:1.12;color:var(--ink);margin-top:14px}
+.section-desc{color:var(--gray);max-width:360px;font-size:.97rem;line-height:1.65}
+
+/* ============ BOTÕES ============ */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:999px;font:600 .95rem 'Archivo';cursor:pointer;border:1.5px solid transparent;text-decoration:none;transition:.25s}
+.btn svg{width:17px;height:17px;transition:transform .25s}
+.btn-primary{background:var(--green-800);color:#F1ECDC}
+.btn-primary:hover{background:#152719}
+.btn-primary:hover svg{transform:translateX(3px)}
+.btn-ghost{border-color:var(--ink);color:var(--ink);background:transparent}
+.btn-ghost:hover{background:var(--ink);color:var(--paper)}
+.btn-light{background:#EDE9DA;color:#17301F}
+.btn-light:hover{background:#fff}
+.btn-light:hover svg{transform:translate(2px,-2px)}
+
+/* ============ HEADER ============ */
+header{position:sticky;top:0;z-index:100;background:rgba(244,239,226,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:.25s}
+header.scrolled{border-color:var(--line);background:rgba(244,239,226,.96)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:78px;gap:20px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);font-family:'Fraunces',serif;font-size:1.45rem;font-weight:600;letter-spacing:-.01em}
+.logo svg{width:36px;height:36px;flex:none}
+.main-nav{display:flex;gap:34px}
+.main-nav a{color:var(--gray);text-decoration:none;font:500 .92rem 'Archivo';position:relative;padding:4px 0}
+.main-nav a::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1.5px;background:var(--green);transform:scaleX(0);transform-origin:left;transition:.25s}
+.main-nav a:hover{color:var(--ink)}
+.main-nav a:hover::after{transform:scaleX(1)}
+.header-actions{display:flex;align-items:center;gap:14px}
+.header-cta{padding:12px 22px}
+.nav-toggle{display:none;width:44px;height:44px;border:1px solid var(--line);background:var(--card);border-radius:12px;cursor:pointer;place-items:center;color:var(--ink)}
+.nav-toggle svg{width:20px;height:20px}
+.nav-toggle .icon-x{display:none}
+.nav-toggle.open .icon-menu{display:none}
+.nav-toggle.open .icon-x{display:block}
+.mobile-menu{position:fixed;inset:0;z-index:99;background:var(--paper);padding:112px 28px 40px;display:flex;flex-direction:column;opacity:0;transform:translateY(-10px);pointer-events:none;transition:.3s}
+.mobile-menu.open{opacity:1;transform:none;pointer-events:auto}
+.mobile-menu a{font-family:'Fraunces',serif;font-size:1.9rem;color:var(--ink);text-decoration:none;padding:20px 4px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.mobile-menu a svg{width:22px;height:22px;color:var(--green)}
+.mobile-menu .btn{margin-top:auto;justify-content:center}
+
+/* ============ HERO ============ */
+.hero{position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(var(--line) 1px,transparent 1.5px);background-size:26px 26px;opacity:.55;-webkit-mask-image:radial-gradient(720px 520px at 74% 42%,#000,transparent 72%);mask-image:radial-gradient(720px 520px at 74% 42%,#000,transparent 72%)}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:64px 0 96px}
+.hero .eyebrow{margin-bottom:22px}
+.hero .eyebrow::before{display:none}
+.hero .eyebrow .pulse{width:8px;height:8px;border-radius:50%;background:var(--green-bright);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(87,166,107,.45)}50%{box-shadow:0 0 0 7px rgba(87,166,107,0)}}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.5rem,5.1vw,4.15rem);font-weight:560;line-height:1.06;letter-spacing:-.015em;color:var(--ink)}
+.hero h1 em{font-style:italic;color:var(--green);font-weight:520}
+.lead{color:var(--gray);font-size:1.06rem;line-height:1.7;max-width:480px;margin-top:22px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}
+.hero-stats{display:flex;gap:clamp(24px,4vw,54px);margin-top:46px;padding-top:30px;border-top:1px solid var(--line)}
+.hstat b{font-family:'Fraunces',serif;font-size:clamp(1.55rem,2.4vw,2.05rem);color:var(--green-800);display:block;line-height:1.1;font-weight:600}
+.hstat span{font-size:.82rem;color:var(--gray);display:block;margin-top:5px;max-width:120px;line-height:1.4}
+.hero-art{position:relative;max-width:600px;width:100%;margin:0 auto}
+.hero-art svg.art{width:100%;height:auto;display:block}
+/* folhas balançando */
+.leaf{transform-box:fill-box;transform-origin:50% 100%;animation:sway 5.5s ease-in-out infinite}
+@keyframes sway{0%,100%{transform:rotate(-2.4deg)}50%{transform:rotate(2.6deg)}}
+/* trilha pontilhada em movimento */
+.conn{stroke-dasharray:3 8;animation:dashmove 1.1s linear infinite}
+@keyframes dashmove{to{stroke-dashoffset:-11}}
+/* etiquetas flutuantes */
+.float-tag{position:absolute;display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:10px 16px;font:600 .8rem 'Archivo';color:var(--ink);box-shadow:0 10px 28px -8px rgba(30,51,37,.16);animation:floaty 5.5s ease-in-out infinite alternate;white-space:nowrap}
+.float-tag svg{width:15px;height:15px;color:var(--green);flex:none}
+.ft-1{top:13%;left:-1%}
+.ft-2{bottom:15%;right:-1%;animation-delay:-2.8s}
+@keyframes floaty{from{transform:translateY(-6px)}to{transform:translateY(7px)}}
+
+/* ============ TICKER DE FATOS ============ */
+.ticker{border-block:1px solid var(--line);background:var(--card);overflow:hidden;padding:15px 0}
+.ticker-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker-group{display:flex}
+.ticker-item{display:flex;align-items:center;gap:12px;padding:0 30px;font:600 .88rem 'Archivo';color:var(--green-900);white-space:nowrap}
+.ticker-item svg{width:15px;height:15px;color:var(--green-bright);flex:none}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ============ CATEGORIAS ============ */
+.cat-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+.cat-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:32px;cursor:pointer;transition:.3s;display:flex;flex-direction:column;gap:18px}
+.cat-card:hover{transform:translateY(-5px);border-color:var(--green-bright);box-shadow:0 20px 44px -20px rgba(30,51,37,.22)}
+.span-7{grid-column:span 7}
+.span-5{grid-column:span 5}
+.cat-top{display:flex;justify-content:space-between;align-items:center}
+.cat-icon{width:54px;height:54px;border-radius:15px;background:#E4EDD6;color:var(--green-800);display:grid;place-items:center}
+.cat-icon svg{width:24px;height:24px}
+.cat-count{font:600 .72rem 'Archivo';text-transform:uppercase;letter-spacing:.07em;color:var(--green);background:var(--green-soft);padding:6px 12px;border-radius:999px}
+.cat-card h3{font-family:'Fraunces',serif;font-size:1.45rem;font-weight:600;color:var(--ink)}
+.cat-items{display:grid;grid-template-columns:1fr;gap:9px;list-style:none}
+.cat-items.cols-2{grid-template-columns:1fr 1fr}
+.cat-items li{display:flex;align-items:center;gap:9px;font-size:.9rem;color:var(--gray)}
+.cat-items li svg{width:15px;height:15px;color:var(--green-bright);flex:none}
+.cat-link{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font:600 .9rem 'Archivo';color:var(--green-800);background:none;border:0;cursor:pointer;padding:0}
+.cat-link svg{width:16px;height:16px;transition:transform .25s}
+.cat-card:hover .cat-link svg{transform:translateX(4px)}
+
+/* ============ COMO FUNCIONA ============ */
+.steps{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:44px}
+.steps::before{content:'';position:absolute;top:33px;left:70px;right:70px;border-top:2px dashed #BCCDB1}
+.step-num{width:66px;height:66px;border-radius:50%;background:var(--card);border:1.5px solid #BCCDB1;display:grid;place-items:center;font-family:'Fraunces',serif;font-size:1.5rem;font-weight:600;color:var(--green-800);position:relative;margin-bottom:24px}
+.step-num::after{content:'';position:absolute;top:-4px;right:-4px;width:15px;height:15px;border-radius:50%;background:var(--green-bright);border:3px solid var(--paper)}
+.step h3{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;margin-bottom:10px}
+.step p{color:var(--gray);font-size:.95rem;line-height:1.65}
+.steps-cta{margin-top:60px;display:flex;justify-content:center}
+
+/* ============ PONTOS DE COLETA ============ */
+.points-tools{display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap}
+.search{flex:1;min-width:260px;display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:0 18px;transition:.2s}
+.search:focus-within{border-color:var(--green)}
+.search svg{width:18px;height:18px;color:var(--gray-2);flex:none}
+.search input{border:0;outline:0;background:none;padding:15px 0;width:100%;font:500 .95rem 'Archivo';color:var(--ink)}
+.search input::placeholder{color:var(--gray-2)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:600 .85rem 'Archivo';color:var(--gray);cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--green-bright);color:var(--green-800)}
+.chip.active{background:var(--green-800);border-color:var(--green-800);color:#F1ECDC}
+.points-meta{color:var(--gray);font-size:.9rem;margin:22px 0 16px}
+.points-meta b{color:var(--ink)}
+.point-row{display:grid;grid-template-columns:1.15fr auto auto;gap:26px;align-items:center;padding:22px 26px;border:1px solid var(--line);border-radius:18px;margin-bottom:12px;transition:.25s}
+.point-row:hover{background:var(--card);border-color:#C9C2A8;box-shadow:0 12px 30px -18px rgba(30,51,37,.25)}
+.point-row h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600}
+.point-addr{display:flex;align-items:center;gap:7px;color:var(--gray);font-size:.88rem;margin-top:5px}
+.point-addr svg{width:14px;height:14px;flex:none;color:var(--gray-2)}
+.point-tags{display:flex;gap:6px;flex-wrap:wrap;max-width:280px;justify-content:flex-end}
+.tag{font:600 .68rem 'Archivo';text-transform:uppercase;letter-spacing:.06em;background:var(--green-soft);color:var(--green-800);padding:5px 10px;border-radius:7px}
+.point-side{display:flex;flex-direction:column;align-items:flex-end;gap:9px}
+.point-hours{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--gray-2)}
+.point-hours svg{width:13px;height:13px}
+.point-route{display:inline-flex;align-items:center;gap:6px;font:600 .88rem 'Archivo';color:var(--green-800);text-decoration:none;border-bottom:1.5px solid transparent;transition:.2s}
+.point-route:hover{border-color:var(--green-800)}
+.point-route svg{width:15px;height:15px}
+.empty{text-align:center;padding:70px 24px;border:1.5px dashed var(--line);border-radius:20px;color:var(--gray)}
+.empty svg{width:34px;height:34px;color:var(--gray-2);margin:0 auto 14px}
+.empty h3{font-family:'Fraunces',serif;font-size:1.3rem;color:var(--ink);margin-bottom:8px}
+.empty button{margin-top:20px}
+
+/* ============ AGENDAR (SEÇÃO ESCURA) ============ */
+.dark-wrap{position:relative;overflow:hidden;background:var(--green-900);border-radius:34px;padding:clamp(36px,6vw,76px);color:#EDE9DA}
+.dark-wrap::before{content:'';position:absolute;width:560px;height:560px;border:1.5px dashed rgba(143,217,160,.22);border-radius:50%;top:-200px;right:-160px;pointer-events:none}
+.eyebrow.light{color:var(--green-mint)}
+.eyebrow.light::before{background:var(--green-mint)}
+.dark-title{font-family:'Fraunces',serif;font-size:clamp(1.9rem,3.2vw,2.7rem);font-weight:600;color:#F3EEDD;line-height:1.12;margin:14px 0 10px}
+.dark-sub{color:rgba(237,233,218,.72);max-width:520px;line-height:1.65;font-size:.97rem}
+.agenda-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(32px,4.5vw,68px);margin-top:48px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px}
+.field label{font:600 .8rem 'Archivo';letter-spacing:.04em;color:#BFD6C2;display:block;margin-bottom:8px}
+.field input,.field select{width:100%;background:rgba(244,239,226,.06);border:1px solid rgba(244,239,226,.16);border-radius:12px;padding:14px 16px;color:#F3EEDD;font:500 .95rem 'Archivo';outline:none;transition:.2s;appearance:none}
+.field input:focus,.field select:focus{border-color:var(--green-mint);background:rgba(244,239,226,.09)}
+.field input::placeholder{color:rgba(244,239,226,.38)}
+.field select option{color:var(--ink)}
+.field input[type=date]{color-scheme:dark}
+.field.full{grid-column:1/-1}
+.select-wrap{position:relative}
+.select-wrap::after{content:'';position:absolute;right:18px;top:44%;width:8px;height:8px;border-right:2px solid #9DC9A8;border-bottom:2px solid #9DC9A8;transform:rotate(45deg);pointer-events:none}
+.msg{display:none;color:#EFAE8C;font-size:.78rem;margin-top:7px}
+.field.error input{border-color:#D97B54}
+.field.error .msg{display:block}
+.pills{display:flex;gap:10px;flex-wrap:wrap}
+.pill input{position:absolute;opacity:0;pointer-events:none}
+.pill span{display:inline-block;padding:11px 18px;border-radius:999px;border:1px solid rgba(244,239,226,.28);font:600 .88rem 'Archivo';color:#CBDCC6;cursor:pointer;transition:.2s;user-select:none}
+.pill span:hover{border-color:var(--green-mint)}
+.pill input:checked+span{background:var(--green-mint);border-color:var(--green-mint);color:#14291A}
+.pill input:focus-visible+span{outline:2px solid var(--green-mint);outline-offset:2px}
+.field.error .pill span{border-color:rgba(217,123,84,.6)}
+.btn-submit{width:100%;margin-top:6px;justify-content:center}
+/* agendamentos recentes */
+.recentes h3{font:600 .76rem 'Archivo';text-transform:uppercase;letter-spacing:.16em;color:#9DC9A8}
+.recentes>p{color:rgba(237,233,218,.55);font-size:.85rem;margin:6px 0 20px;line-height:1.55}
+.recent-list{display:flex;flex-direction:column;gap:12px}
+.recent-item{background:rgba(244,239,226,.06);border:1px solid rgba(244,239,226,.11);border-radius:16px;padding:16px 18px}
+.recent-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.recent-top strong{font-size:.95rem;font-weight:600;color:#F3EEDD}
+.badge-new{font:700 .62rem 'Archivo';text-transform:uppercase;letter-spacing:.08em;background:var(--green-mint);color:#14291A;padding:4px 9px;border-radius:6px;flex:none}
+.recent-meta{color:rgba(237,233,218,.68);font-size:.83rem;margin-top:7px;line-height:1.55}
+.recent-time{display:flex;align-items:center;gap:6px;color:rgba(237,233,218,.42);font-size:.75rem;margin-top:9px}
+.recent-time svg{width:12px;height:12px}
+
+/* ============ SOBRE ============ */
+.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,6vw,90px);align-items:center}
+.about-media{position:relative}
+.about-media img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:26px;filter:saturate(.8) sepia(.22) contrast(1.02)}
+.media-card{position:absolute;left:22px;bottom:26px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px;display:flex;gap:13px;align-items:center;box-shadow:0 18px 40px -14px rgba(30,51,37,.28)}
+.media-card svg{width:26px;height:26px;color:var(--green)}
+.media-card b{display:block;font-family:'Fraunces',serif;font-size:1.4rem;line-height:1;color:var(--green-800)}
+.media-card span{font-size:.78rem;color:var(--gray);display:block;margin-top:3px}
+.about-copy .section-desc{max-width:none;margin-top:18px}
+.about-list{list-style:none;margin:28px 0 36px;display:grid;gap:16px}
+.about-list li{display:flex;gap:14px;align-items:flex-start}
+.about-list svg{width:19px;height:19px;color:var(--green);flex:none;margin-top:2px}
+.about-list b{display:block;font-size:.95rem}
+.about-list p{font-size:.88rem;color:var(--gray);margin-top:2px;line-height:1.55}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;border-top:1px solid var(--line);padding-top:28px}
+.stat b{font-family:'Fraunces',serif;font-size:clamp(1.7rem,2.6vw,2.25rem);color:var(--green-800);display:block;font-weight:600}
+.stat span{font-size:.82rem;color:var(--gray);display:block;margin-top:5px;line-height:1.4}
+
+/* ============ FOOTER ============ */
+footer{background:#20241F;color:#AEB4A6;padding:72px 0 30px;margin-top:40px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.4fr;gap:44px;padding-bottom:52px;border-bottom:1px solid rgba(244,239,226,.1)}
+.foot-brand .logo{color:#F3EEDD}
+.foot-brand>p{font-size:.9rem;margin:18px 0 24px;line-height:1.65;color:#8F968A;max-width:280px}
+.socials{display:flex;gap:10px}
+.socials a{width:38px;height:38px;border:1px solid rgba(244,239,226,.16);border-radius:10px;display:grid;place-items:center;color:#AEB4A6;transition:.2s}
+.socials a:hover{color:#F3EEDD;border-color:var(--green-mint)}
+.socials svg{width:16px;height:16px}
+footer h4{font:600 .76rem 'Archivo';text-transform:uppercase;letter-spacing:.16em;color:#E8E4D4;margin-bottom:20px}
+.foot-links{list-style:none;display:grid;gap:11px}
+.foot-links a{color:#9AA196;font-size:.92rem;text-decoration:none;transition:.2s}
+.foot-links a:hover{color:#F3EEDD}
+.news-form{display:flex;gap:8px;margin-top:6px}
+.news-form input{flex:1;background:rgba(244,239,226,.06);border:1px solid rgba(244,239,226,.16);border-radius:12px;padding:13px 16px;color:#F3EEDD;font:500 .9rem 'Archivo';outline:none;transition:.2s;min-width:0}
+.news-form input:focus{border-color:var(--green-mint)}
+.news-form input::placeholder{color:rgba(244,239,226,.38)}
+.news-form button{width:48px;flex:none;border-radius:12px;background:var(--green-mint);color:#14291A;border:0;cursor:pointer;display:grid;place-items:center;transition:.2s}
+.news-form button:hover{background:#fff}
+.news-form button svg{width:17px;height:17px}
+.foot-note{font-size:.8rem;color:#767D72;margin-top:12px;line-height:1.5}
+.foot-base{display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:.82rem;color:#767D72;flex-wrap:wrap;gap:12px}
+.foot-base a{color:#9AA196;text-decoration:none}
+.foot-base a:hover{color:#F3EEDD}
+
+/* ============ TOASTS ============ */
+.toast-stack{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:10px}
+.toast{display:flex;align-items:center;gap:11px;background:#232A23;color:#F1ECDC;padding:15px 20px;border-radius:14px;box-shadow:0 18px 44px -10px rgba(0,0,0,.4);font:500 .9rem 'Archivo';max-width:360px;animation:toastIn .35s cubic-bezier(.2,.9,.3,1.2)}
+.toast svg{width:18px;height:18px;flex:none;color:var(--green-mint)}
+.toast.error svg{color:#EFAE8C}
+.toast.out{animation:toastOut .3s forwards}
+@keyframes toastIn{from{transform:translateY(16px);opacity:0}}
+@keyframes toastOut{to{transform:translateY(10px);opacity:0}}
+
+/* ============ REVEAL ON SCROLL ============ */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+.delay-1{transition-delay:.1s}
+.delay-2{transition-delay:.2s}
+.delay-3{transition-delay:.3s}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;gap:56px}
+  .hero-art{max-width:520px}
+  .span-7,.span-5{grid-column:span 6}
+  .agenda-grid{grid-template-columns:1fr}
+}
+@media (max-width:900px){
+  .main-nav,.header-cta{display:none}
+  .nav-toggle{display:grid}
+  .about-grid{grid-template-columns:1fr}
+  .about-media{max-width:440px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:860px){
+  .section{padding:72px 0}
+  .steps{grid-template-columns:1fr;gap:38px}
+  .steps::before{left:33px;right:auto;top:60px;bottom:60px;border-top:0;border-left:2px dashed #BCCDB1}
+  .point-row{grid-template-columns:1fr;gap:14px}
+  .point-tags{justify-content:flex-start;max-width:none}
+  .point-side{flex-direction:row;justify-content:space-between;align-items:center;width:100%}
+  .section-head{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:42px}
+}
+@media (max-width:640px){
+  .span-7,.span-5{grid-column:span 12}
+  .form-grid{grid-template-columns:1fr}
+  .cat-items.cols-2{grid-template-columns:1fr}
+  .float-tag{display:none}
+  .foot-grid{grid-template-columns:1fr;gap:36px}
+  .hero-stats{flex-wrap:wrap;gap:22px}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="siteHeader">
+  <div class="container header-inner">
+    <a href="#inicio" class="logo" aria-label="Ecoleta — início">
+      <!-- Logo autoral: folha brotando de uma trilha de circuito -->
+      <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <rect x="2" y="2" width="36" height="36" rx="12" fill="#1E3325"/>
+        <path d="M8 20h5.5l3.5 3.5" stroke="#4E8A5F" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="7" cy="20" r="1.5" fill="#4E8A5F"/>
+        <path d="M32 25h-4.5l-2.5-2.5" stroke="#4E8A5F" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="33" cy="25" r="1.5" fill="#4E8A5F"/>
+        <path d="M20 30C19 22.5 14.5 19.8 15 13.5c6.6 1.6 6.1 9 5 16.5Z" fill="#8FD9A0"/>
+        <path d="M19.3 26c-.8-3.6-2.2-6.4-3.4-9.6" stroke="#1E3325" stroke-width="1" stroke-linecap="round"/>
+        <path d="M20.5 30c.6-5.5 4-7.6 6.5-13.5" stroke="#8FD9A0" stroke-width="1.7" stroke-linecap="round"/>
+        <circle cx="27.6" cy="14.8" r="2" fill="#8FD9A0"/>
+      </svg>
+      Ecoleta
+    </a>
+    <nav class="main-nav" aria-label="Navegação principal">
+      <a href="#como-funciona">Como Funciona</a>
+      <a href="#pontos">Pontos de Coleta</a>
+      <a href="#sobre">Sobre Nós</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#agendar" class="btn btn-primary header-cta">Agendar coleta</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu">
+        <i data-lucide="menu" class="icon-menu"></i>
+        <i data-lucide="x" class="icon-x"></i>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu" aria-label="Menu móvel">
+    <a href="#como-funciona">Como Funciona <i data-lucide="arrow-up-right"></i></a>
+    <a href="#pontos">Pontos de Coleta <i data-lucide="arrow-up-right"></i></a>
+    <a href="#sobre">Sobre Nós <i data-lucide="arrow-up-right"></i></a>
+    <a href="#agendar" class="btn btn-primary">Agendar coleta <i data-lucide="truck"></i></a>
+  </nav>
+</header>
+
+<main>
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="inicio">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow"><span class="pulse"></span>Descarte consciente de lixo eletrônico</span>
+        <h1>O fim do seu eletrônico pode ser <em>o começo de algo muito maior.</em></h1>
+        <p class="lead">A Ecoleta conecta você a pontos de coleta certificados em toda a cidade para dar o destino correto a celulares, computadores, baterias e eletrodomésticos — rápido, gratuito e sem complicação.</p>
+        <div class="hero-ctas">
+          <a href="#pontos" class="btn btn-primary">Encontrar ponto de coleta <i data-lucide="map-pin"></i></a>
+          <a href="#agendar" class="btn btn-ghost">Agendar coleta em casa <i data-lucide="truck"></i></a>
+        </div>
+        <div class="hero-stats" id="heroStats">
+          <div class="hstat"><b><span data-count="8" id="statPontos">0</span></b><span>pontos de coleta certificados</span></div>
+          <div class="hstat"><b><span data-count="1240" id="statKg">0</span> kg</b><span>desviados de aterros sanitários</span></div>
+          <div class="hstat"><b><span data-count="580" id="statColetas">0</span></b><span>coletas conectadas na plataforma</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art reveal delay-1">
+        <!-- Ilustração autoral: placa de circuito de onde brotam folhas -->
+        <svg class="art" viewBox="0 0 640 620" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ilustração de uma placa de circuito eletrônico de onde brotam folhas verdes">
+          <!-- fundos -->
+          <circle cx="322" cy="316" r="238" fill="#E7E0C9"/>
+          <circle cx="322" cy="316" r="278" stroke="#2F6B3F" stroke-opacity=".45" stroke-width="1.5" stroke-dasharray="2 9" stroke-linecap="round"/>
+          <path d="M120 120v16M112 128h16" stroke="#2F6B3F" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+          <path d="M540 470v12M534 476h12" stroke="#2F6B3F" stroke-opacity=".35" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- conexão pontilhada do celular à planta -->
+          <path class="conn" d="M468 268C436 268 414 288 398 306" stroke="#3F8A50" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- smartphone em linha -->
+          <g transform="rotate(8 520 250)">
+            <rect x="468" y="150" width="104" height="188" rx="22" fill="#FBF7EC" stroke="#24382A" stroke-width="3"/>
+            <rect x="481" y="170" width="78" height="136" rx="10" fill="#EDE6D0"/>
+            <rect x="504" y="157" width="30" height="5" rx="2.5" fill="#24382A"/>
+            <rect x="502" y="320" width="34" height="4" rx="2" fill="#24382A"/>
+            <path d="M520 290c-8-20-21-28-18-52 22 6 24 34 18 52Z" fill="#3F8A50"/>
+            <path d="M519 284c-3-11-8-18-13-27" stroke="#FBF7EC" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M534 178h18M534 186h10" stroke="#B9B08F" stroke-width="2.4" stroke-linecap="round"/>
+          </g>
+
+          <!-- placa de circuito (PCB) -->
+          <g transform="rotate(-6 322 484)">
+            <rect x="162" y="400" width="320" height="168" rx="16" fill="#1D3123" stroke="#39543F" stroke-width="2"/>
+            <!-- trilhas internas -->
+            <path d="M186 428h36l18 18v26" stroke="#4E8A5F" stroke-width="2" stroke-linecap="round"/>
+            <path d="M186 452h24l14 14v16" stroke="#4E8A5F" stroke-width="2" stroke-linecap="round"/>
+            <path d="M460 428h-28l-16 16v18" stroke="#4E8A5F" stroke-width="2" stroke-linecap="round"/>
+            <path d="M456 540h-24l-18-18v-12" stroke="#4E8A5F" stroke-width="2" stroke-linecap="round"/>
+            <!-- contatos bege -->
+            <g fill="#E3D8B4">
+              <rect x="196" y="548" width="10" height="13" rx="2"/><rect x="216" y="548" width="10" height="13" rx="2"/>
+              <rect x="236" y="548" width="10" height="13" rx="2"/><rect x="256" y="548" width="10" height="13" rx="2"/>
+              <rect x="276" y="548" width="10" height="13" rx="2"/><rect x="296" y="548" width="10" height="13" rx="2"/>
+              <rect x="316" y="548" width="10" height="13" rx="2"/>
+            </g>
+            <!-- chip principal -->
+            <rect x="225" y="440" width="76" height="58" rx="8" fill="#2C4A35" stroke="#4E7A57" stroke-width="1.5"/>
+            <g stroke="#57A66B" stroke-width="2" stroke-linecap="round">
+              <path d="M219 452h6M219 466h6M219 480h6M307 452h-6M307 466h-6M307 480h-6"/>
+            </g>
+            <!-- chip secundário + oscilador -->
+            <rect x="340" y="470" width="48" height="34" rx="6" fill="#2C4A35" stroke="#4E7A57" stroke-width="1.5"/>
+            <rect x="404" y="478" width="22" height="14" rx="3" fill="none" stroke="#4E8A5F" stroke-width="2"/>
+            <!-- parafusos -->
+            <g stroke="#6E8F76" stroke-width="1.8">
+              <circle cx="180" cy="418" r="5"/><circle cx="464" cy="418" r="5"/>
+              <circle cx="180" cy="550" r="5"/><circle cx="464" cy="550" r="5"/>
+            </g>
+            <!-- serigrafia -->
+            <text x="410" y="530" fill="#7FA386" font-family="Archivo, sans-serif" font-size="11" letter-spacing="3">ECO-02</text>
+            <text x="410" y="546" fill="#5F7F68" font-family="Archivo, sans-serif" font-size="9" letter-spacing="2">REC-92%</text>
+            <path d="M182 510c-3-8-8-11-7.5-18 7.5 1.8 7 11 7.5 18Z" fill="none" stroke="#7FA386" stroke-width="1.4"/>
+          </g>
+
+          <!-- hastes (trilhos que viram caules) -->
+          <g stroke-linecap="round" fill="none">
+            <path id="hasteA" d="M263 446C263 340 300 260 310 158" stroke="#2F6B3F" stroke-width="3.5"/>
+            <path id="hasteB" d="M243 452C230 380 205 340 200 250" stroke="#2F6B3F" stroke-width="3"/>
+            <path id="hasteC" d="M287 448C300 380 345 340 352 262" stroke="#2F6B3F" stroke-width="3"/>
+          </g>
+
+          <!-- pulsos de energia subindo pelas hastes -->
+          <circle r="3.5" fill="#8FD9A0">
+            <animateMotion dur="4s" begin="0s" repeatCount="indefinite"><mpath href="#hasteA"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="4s" begin="0s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="3" fill="#8FD9A0">
+            <animateMotion dur="5s" begin="1.4s" repeatCount="indefinite"><mpath href="#hasteB"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="5s" begin="1.4s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="3" fill="#8FD9A0">
+            <animateMotion dur="4.6s" begin="2.6s" repeatCount="indefinite"><mpath href="#hasteC"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.12;.85;1" dur="4.6s" begin="2.6s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- folhas (grupo externo posiciona / interno anima) -->
+          <g transform="translate(310 158) rotate(-18)"><g class="leaf">
+            <path d="M0 0C4-22 22-38 46-40 48-16 28 2 0 0Z" fill="#3F8A50"/>
+            <path d="M4-3C16-14 30-26 42-36" stroke="#8FD9A0" stroke-width="1.8" stroke-linecap="round"/>
+          </g></g>
+          <g transform="translate(291 258) rotate(-65)"><g class="leaf" style="animation-delay:-1.4s">
+            <path d="M0 0C2-14 14-25 30-26 31-10 16 2 0 0Z" fill="#57A66B"/>
+            <path d="M3-2C11-9 20-16 27-23" stroke="#1D3123" stroke-width="1.4" stroke-linecap="round"/>
+          </g></g>
+          <g transform="translate(306 306) rotate(28)"><g class="leaf" style="animation-delay:-3s">
+            <path d="M0 0C4-22 22-38 46-40 48-16 28 2 0 0Z" fill="none" stroke="#2F6B3F" stroke-width="2.2"/>
+          </g></g>
+          <g transform="translate(200 250) rotate(-55)"><g class="leaf" style="animation-delay:-2.2s">
+            <path d="M0 0C4-22 22-38 46-40 48-16 28 2 0 0Z" fill="none" stroke="#2F6B3F" stroke-width="2.2"/>
+          </g></g>
+          <g transform="translate(219 336) rotate(14)"><g class="leaf" style="animation-delay:-4s">
+            <path d="M0 0C2-14 14-25 30-26 31-10 16 2 0 0Z" fill="#57A66B"/>
+            <path d="M3-2C11-9 20-16 27-23" stroke="#1D3123" stroke-width="1.4" stroke-linecap="round"/>
+          </g></g>
+          <g transform="translate(352 262) rotate(24)"><g class="leaf" style="animation-delay:-.8s">
+            <path d="M0 0C4-22 22-38 46-40 48-16 28 2 0 0Z" fill="#57A66B"/>
+            <path d="M4-3C16-14 30-26 42-36" stroke="#1D3123" stroke-width="1.6" stroke-linecap="round"/>
+          </g></g>
+          <g transform="translate(331 334) rotate(-42)"><g class="leaf" style="animation-delay:-3.6s">
+            <path d="M0 0C2-14 14-25 30-26 31-10 16 2 0 0Z" fill="none" stroke="#2F6B3F" stroke-width="2"/>
+          </g></g>
+        </svg>
+
+        <div class="float-tag ft-1"><i data-lucide="shield-check"></i>Pontos 100% verificados</div>
+        <div class="float-tag ft-2"><i data-lucide="recycle"></i>92% dos materiais reaproveitados</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TICKER DE FATOS ================= -->
+  <div class="ticker" aria-label="Fatos sobre lixo eletrônico">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <!-- ================= CATEGORIAS ================= -->
+  <section class="section" id="categorias">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">01 — O que coletamos</span>
+          <h2 class="section-title">Do celular esquecido<br>ao sofá inteiro de eletrônicos.</h2>
+        </div>
+        <p class="section-desc">Se tem placa, cabo, bateria ou motor, nós sabemos exatamente para onde ele deve ir. Toque em uma categoria para ver os pontos que aceitam.</p>
+      </div>
+      <div class="cat-grid">
+        <article class="cat-card span-7 reveal" data-cat="computadores" tabindex="0" role="button" aria-label="Filtrar pontos que aceitam computadores">
+          <div class="cat-top">
+            <div class="cat-icon"><i data-lucide="monitor"></i></div>
+            <span class="cat-count" data-cat-count="computadores"></span>
+          </div>
+          <h3>Computadores e notebooks</h3>
+          <ul class="cat-items cols-2">
+            <li><i data-lucide="check"></i>Desktops completos</li>
+            <li><i data-lucide="check"></i>Notebooks de qualquer geração</li>
+            <li><i data-lucide="check"></i>Monitores e telas</li>
+            <li><i data-lucide="check"></i>Impressoras e scanners</li>
+            <li><i data-lucide="check"></i>Cabos, fontes e carregadores</li>
+            <li><i data-lucide="check"></i>Teclados e mouses</li>
+          </ul>
+          <button class="cat-link">Ver pontos que aceitam <i data-lucide="arrow-right"></i></button>
+        </article>
+
+        <article class="cat-card span-5 reveal delay-1" data-cat="celulares" tabindex="0" role="button" aria-label="Filtrar pontos que aceitam celulares">
+          <div class="cat-top">
+            <div class="cat-icon"><i data-lucide="smartphone"></i></div>
+            <span class="cat-count" data-cat-count="celulares"></span>
+          </div>
+          <h3>Celulares e tablets</h3>
+          <ul class="cat-items">
+            <li><i data-lucide="check"></i>Smartphones e tablets</li>
+            <li><i data-lucide="check"></i>Carregadores e cabos</li>
+            <li><i data-lucide="check"></i>Fones e smartwatches</li>
+            <li><i data-lucide="check"></i>Aparelhos quebrados ou antigos</li>
+          </ul>
+          <button class="cat-link">Ver pontos que aceitam <i data-lucide="arrow-right"></i></button>
+        </article>
+
+        <article class="cat-card span-5 reveal" data-cat="baterias" tabindex="0" role="button" aria-label="Filtrar pontos que aceitam baterias">
+          <div class="cat-top">
+            <div class="cat-icon"><i data-lucide="battery-charging"></i></div>
+            <span class="cat-count" data-cat-count="baterias"></span>
+          </div>
+          <h3>Baterias e pilhas</h3>
+          <ul class="cat-items">
+            <li><i data-lucide="check"></i>Baterias de lítio</li>
+            <li><i data-lucide="check"></i>Pilhas AA, AAA e botão</li>
+            <li><i data-lucide="check"></i>Power banks</li>
+            <li><i data-lucide="check"></i>Baterias de notebook</li>
+          </ul>
+          <button class="cat-link">Ver pontos que aceitam <i data-lucide="arrow-right"></i></button>
+        </article>
+
+        <article class="cat-card span-7 reveal delay-1" data-cat="eletrodomesticos" tabindex="0" role="button" aria-label="Filtrar pontos que aceitam eletrodomésticos">
+          <div class="cat-top">
+            <div class="cat-icon"><i data-lucide="plug"></i></div>
+            <span class="cat-count" data-cat-count="eletrodomesticos"></span>
+          </div>
+          <h3>Eletrodomésticos</h3>
+          <ul class="cat-items cols-2">
+            <li><i data-lucide="check"></i>Micro-ondas</li>
+            <li><i data-lucide="check"></i>Ventiladores e climatizadores</li>
+            <li><i data-lucide="check"></i>Liquidificadores e batedeiras</li>
+            <li><i data-lucide="check"></i>Ferros e secadores de cabelo</li>
+            <li><i data-lucide="check"></i>Aspiradores de pó</li>
+            <li><i data-lucide="check"></i>TVs e monitores antigos</li>
+          </ul>
+          <button class="cat-link">Ver pontos que aceitam <i data-lucide="arrow-right"></i></button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= COMO FUNCIONA ================= -->
+  <section class="section" id="como-funciona" style="padding-top:24px">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">02 — Como funciona</span>
+          <h2 class="section-title">Três passos entre você<br>e o descarte correto.</h2>
+        </div>
+        <p class="section-desc">Sem burocracia, sem cadastro complicado. O circuito completo leva menos tempo do que organizar uma gaveta.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <h3>Separe o que não usa mais</h3>
+          <p>Junte celulares, cabos, baterias ou aquele notebook parado na gaveta. Não precisa estar funcionando — nós cuidamos de tudo.</p>
+        </div>
+        <div class="step reveal delay-1">
+          <div class="step-num">2</div>
+          <h3>Encontre o ponto ideal</h3>
+          <p>Use a busca para achar o ponto de coleta mais próximo que aceita exatamente o que você tem em mãos, com horários claros.</p>
+        </div>
+        <div class="step reveal delay-2">
+          <div class="step-num">3</div>
+          <h3>Descarte com segurança</h3>
+          <p>Leve até o ponto ou agende a retirada em casa. Cada item segue para triagem certificada e volta à indústria como matéria-prima.</p>
+        </div>
+      </div>
+      <div class="steps-cta reveal">
+        <a href="#pontos" class="btn btn-primary">Quero descartar agora <i data-lucide="arrow-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PONTOS DE COLETA ================= -->
+  <section class="section" id="pontos" style="padding-top:24px">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          <span class="eyebrow">03 — Pontos de coleta</span>
+          <h2 class="section-title">Um ponto de coleta<br>perto de você.</h2>
+        </div>
+        <p class="section-desc">Todos os pontos da rede são verificados periodicamente pela equipe Ecoleta. Dados carregados direto do nosso banco.</p>
+      </div>
+      <div class="reveal">
+        <div class="points-tools">
+          <div class="search">
+            <i data-lucide="search"></i>
+            <input type="text" id="searchInput" placeholder="Busque por bairro, nome ou endereço..." aria-label="Buscar pontos de coleta">
+          </div>
+          <div class="chips" id="chips">
+            <button class="chip active" data-cat="todos">Todos</button>
+            <button class="chip" data-cat="computadores">Computadores</button>
+            <button class="chip" data-cat="celulares">Celulares</button>
+            <button class="chip" data-cat="baterias">Baterias</button>
+            <button class="chip" data-cat="eletrodomesticos">Eletrodomésticos</button>
+          </div>
+        </div>
+        <p class="points-meta"><b id="pointsCount">0</b> pontos encontrados para o seu filtro</p>
+        <div id="pointsList"></div>
+        <div class="empty" id="emptyState" hidden>
+          <i data-lucide="search"></i>
+          <h3>Nenhum ponto encontrado</h3>
+          <p>Tente outro termo de busca ou remova os filtros aplicados.</p>
+          <button class="btn btn-ghost" id="clearFilters">Limpar busca <i data-lucide="x"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AGENDAR COLETA ================= -->
+  <section class="section" id="agendar">
+    <div class="container">
+      <div class="dark-wrap reveal">
+        <span class="eyebrow light">04 — Agende sua coleta</span>
+        <h2 class="dark-title">Deixe a coleta ir até você.</h2>
+        <p class="dark-sub">Preencha os dados e nossa rede de coletores parceiros busca seus eletrônicos no endereço escolhido — gratuito para volumes de até uma caixa.</p>
+
+        <div class="agenda-grid">
+          <form class="form-grid" id="coletaForm" novalidate>
+            <div class="field" data-field="nome">
+              <label for="fNome">Nome completo</label>
+              <input type="text" id="fNome" placeholder="Como podemos te chamar?" autocomplete="name">
+              <span class="msg">Informe seu nome completo.</span>
+            </div>
+            <div class="field" data-field="whatsapp">
+              <label for="fTel">WhatsApp</label>
+              <input type="tel" id="fTel" placeholder="(11) 91234-5678" autocomplete="tel" inputmode="numeric">
+              <span class="msg">Informe um WhatsApp válido com DDD.</span>
+            </div>
+            <div class="field full" data-field="endereco">
+              <label for="fEnd">Endereço completo</label>
+              <input type="text" id="fEnd" placeholder="Rua, número, complemento" autocomplete="street-address">
+              <span class="msg">Informe o endereço completo da coleta.</span>
+            </div>
+            <div class="field" data-field="bairro">
+              <label for="fBairro">Bairro</label>
+              <input type="text" id="fBairro" placeholder="Ex.: Vila Madalena">
+              <span class="msg">Informe o bairro.</span>
+            </div>
+            <div class="field" data-field="data">
+              <label for="fData">Data preferida</label>
+              <input type="date" id="fData">
+              <span class="msg">Escolha uma data para a coleta.</span>
+            </div>
+            <div class="field full" data-field="materiais">
+              <label>O que você vai descartar?</label>
+              <div class="pills" id="pillsMateriais">
+                <label class="pill"><input type="checkbox" value="computadores"><span>Computadores</span></label>
+                <label class="pill"><input type="checkbox" value="celulares"><span>Celulares</span></label>
+                <label class="pill"><input type="checkbox" value="baterias"><span>Baterias</span></label>
+                <label class="pill"><input type="checkbox" value="eletrodomesticos"><span>Eletrodomésticos</span></label>
+              </div>
+              <span class="msg">Selecione pelo menos um tipo de material.</span>
+            </div>
+            <div class="field full select-wrap">
+              <label for="fVolume">Volume estimado</label>
+              <select id="fVolume">
+                <option value="poucos">Poucos itens — até 5 aparelhos</option>
+                <option value="caixa">Uma caixa</option>
+                <option value="caixas">Várias caixas</option>
+                <option value="grande">Grande volume — móvel cheio / eletrodomésticos</option>
+              </select>
+            </div>
+            <div class="field full">
+              <button type="submit" class="btn btn-light btn-submit">Confirmar agendamento <i data-lucide="send"></i></button>
+            </div>
+          </form>
+
+          <aside class="recentes">
+            <h3>Agendamentos recentes</h3>
+            <p>Últimos pedidos registrados na plataforma, salvos no banco local em tempo real.</p>
+            <div class="recent-list" id="recentList"></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOBRE ================= -->
+  <section class="section" id="sobre">
+    <div class="container about-grid">
+      <div class="about-media reveal">
+        <img src="https://picsum.photos/seed/ecoleta-central/720/900.jpg" alt="Ambiente da central de triagem parceira da Ecoleta" loading="lazy">
+        <div class="media-card">
+          <i data-lucide="truck"></i>
+          <div><b id="mediaColetas">580</b><span>coletas realizadas este ano</span></div>
+        </div>
+      </div>
+      <div class="about-copy reveal delay-1">
+        <span class="eyebrow">05 — Sobre nós</span>
+        <h2 class="section-title">Pequenos gestos,<br>um circuito inteiro de mudança.</h2>
+        <p class="section-desc">A Ecoleta nasceu de uma pergunta simples: por que tantos aparelhos cheios de materiais preciosos terminam enterrados no lixo comum? Criamos uma ponte direta entre quem quer descartar corretamente e uma rede de pontos de coleta certificados. Cada celular, cabo ou bateria entregue passa por triagem especializada, onde metais, plásticos e componentes são separados e devolvidos à indústria — em vez de contaminar o solo e a água por décadas.</p>
+        <p class="section-desc">Mais do que facilidade, queremos criar hábito. Porque descarte correto não é um gesto isolado: é um circuito que só funciona com você dentro dele.</p>
+        <ul class="about-list">
+          <li><i data-lucide="shield-check"></i><div><b>Rede 100% certificada</b><p>Todos os pontos passam por auditoria periódica de destino final.</p></div></li>
+          <li><i data-lucide="route"></i><div><b>Coleta em casa</b><p>Para grandes volumes, nossos parceiros retiram no seu endereço.</p></div></li>
+          <li><i data-lucide="recycle"></i><div><b>Destinação transparente</b><p>Você acompanha para onde cada material foi encaminhado.</p></div></li>
+        </ul>
+        <div class="about-stats" id="aboutStats">
+          <div class="stat"><b><span data-count="92">0</span>%</b><span>dos materiais recuperados em triagem</span></div>
+          <div class="stat"><b><span data-count="12">0</span> t</b><span>de CO₂ evitadas somente este ano</span></div>
+          <div class="stat"><b>R$ <span data-count="0">0</span></b><span>custo para o cidadão. Sempre gratuito.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#inicio" class="logo" aria-label="Ecoleta — início">
+          <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="2" y="2" width="36" height="36" rx="12" fill="#2C4A35"/>
+            <path d="M8 20h5.5l3.5 3.5" stroke="#57A66B" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="7" cy="20" r="1.5" fill="#57A66B"/>
+            <path d="M32 25h-4.5l-2.5-2.5" stroke="#57A66B" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="33" cy="25" r="1.5" fill="#57A66B"/>
+            <path d="M20 30C19 22.5 14.5 19.8 15 13.5c6.6 1.6 6.1 9 5 16.5Z" fill="#8FD9A0"/>
+            <path d="M20.5 30c.6-5.5 4-7.6 6.5-13.5" stroke="#8FD9A0" stroke-width="1.7" stroke-linecap="round"/>
+            <circle cx="27.6" cy="14.8" r="2" fill="#8FD9A0"/>
+          </svg>
+          Ecoleta
+        </a>
+        <p>Plataforma que conecta pessoas a pontos de coleta de lixo eletrônico, dando destino correto a aparelhos em fim de vida útil.</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+          <a href="#" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4>Navegação</h4>
+        <ul class="foot-links">
+          <li><a href="#como-funciona">Como Funciona</a></li>
+          <li><a href="#pontos">Pontos de Coleta</a></li>
+          <li><a href="#categorias">O que coletamos</a></li>
+          <li><a href="#agendar">Agendar coleta</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Institucional</h4>
+        <ul class="foot-links">
+          <li><a href="#sobre">Sobre nós</a></li>
+          <li><a href="#">Seja um ponto parceiro</a></li>
+          <li><a href="#">Política de privacidade</a></li>
+          <li><a href="#">Termos de uso</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Fique por dentro</h4>
+        <form class="news-form" id="newsForm" novalidate>
+          <input type="email" id="newsEmail" placeholder="Seu melhor e-mail" aria-label="E-mail para novidades">
+          <button type="submit" aria-label="Assinar novidades"><i data-lucide="send"></i></button>
+        </form>
+        <p class="foot-note">Receba por mês os impactos da rede e novos pontos de coleta na sua região. Sem spam.</p>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>© 2025 Ecoleta. Todos os direitos reservados.</span>
+      <span>Feito com responsabilidade ambiental e código puro.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+  import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBbwa8YFzCvPgbuM_1R8FLAvn4qMRrJUZo",
+    authDomain: "e-coletas.firebaseapp.com",
+    projectId: "e-coletas",
+    storageBucket: "e-coletas.firebasestorage.app",
+    messagingSenderId: "271302501123",
+    appId: "1:271302501123:web:7dd1c2c98a876b4d907f36",
+    measurementId: "G-J2XZSQBHRZ"
+  };
+
+  const firebaseApp = initializeApp(firebaseConfig);
+  isSupported().then((supported) => {
+    if (supported) getAnalytics(firebaseApp);
+  }).catch(() => {});
+</script>
+
+<script>
+/* ==========================================================================
+   CAMADA DE DADOS — EcoDB (compatível com a API do Cloud Firestore)
+   --------------------------------------------------------------------------
+   Reproduz o comportamento de um banco NoSQL em coleções usando
+   localStorage, para o site funcionar 100% no navegador, já persistindo
+   dados entre recarregamentos.
+
+   Para migrar ao Firebase (Firestore) sem tocar no resto do código,
+   basta reimplementar os métodos abaixo com o SDK do seu projeto:
+
+     EcoDB.init(seeds)        → grava os documentos iniciais (só 1ª vez)
+     EcoDB.add(colecao, doc)  → addDoc(collection(db, colecao), doc)
+     EcoDB.getAll(colecao)    → getDocs(collection(db, colecao))
+
+   Dica: troque getAll() por onSnapshot() para atualizações em tempo real.
+   ========================================================================== */
+const EcoDB = (() => {
+  const PREFIX = 'ecoleta:';
+  const read = col => { try { return JSON.parse(localStorage.getItem(PREFIX + col) || 'null'); } catch { return null; } };
+  const write = (col, docs) => localStorage.setItem(PREFIX + col, JSON.stringify(docs));
+
+  return {
+    // Grava coleções iniciais apenas se ainda não existirem (equivale a um seed script)
+    init(seeds) {
+      Object.entries(seeds).forEach(([col, docs]) => { if (!read(col)) write(col, docs); });
+    },
+    // Equivalente a addDoc()
+    async add(col, doc) {
+      const docs = read(col) || [];
+      const novo = { id: 'doc_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), criadoEm: Date.now(), ...doc };
+      docs.unshift(novo); write(col, docs); return novo;
+    },
+    // Equivalente a getDocs()
+    async getAll(col) { return (read(col) || []).slice(); }
+  };
+})();
+
+/* ============ DADOS INICIAIS (seeds) ============ */
+const PESOS = { poucos: 3, caixa: 8, caixas: 20, grande: 45 };
+const NOME_CATS = { computadores: 'Computadores', celulares: 'Celulares', baterias: 'Baterias', eletrodomesticos: 'Eletrodomésticos' };
+
+const AGORA = Date.now();
+const SEEDS = {
+  pontos: [
+    { nome: 'Ecoponto Vila Madalena', endereco: 'Rua Harmonia, 521', bairro: 'Vila Madalena', materiais: ['computadores','celulares','baterias','eletrodomesticos'], horario: 'Seg–Sáb, 9h às 17h' },
+    { nome: 'VerdeCiclo Pinheiros', endereco: 'Rua dos Pinheiros, 1210', bairro: 'Pinheiros', materiais: ['computadores','celulares','baterias'], horario: 'Seg–Sex, 8h às 18h' },
+    { nome: 'Estação Central de Descarte', endereco: 'Praça da Sé, 87', bairro: 'Centro', materiais: ['computadores','celulares','baterias','eletrodomesticos'], horario: 'Todos os dias, 7h às 19h' },
+    { nome: 'Recicla+ Moema', endereco: 'Av. Ibirapuera, 2035', bairro: 'Moema', materiais: ['celulares','baterias','eletrodomesticos'], horario: 'Seg–Sáb, 10h às 20h' },
+    { nome: 'CoopEletro Tatuapé', endereco: 'Rua Serra de Bragança, 640', bairro: 'Tatuapé', materiais: ['computadores','eletrodomesticos'], horario: 'Seg–Sáb, 9h às 18h' },
+    { nome: 'Ponto Verde Butantã', endereco: 'Av. Vital Brazil, 1500', bairro: 'Butantã', materiais: ['computadores','baterias','eletrodomesticos'], horario: 'Seg–Sáb, 8h às 18h' },
+    { nome: 'Ecotrevo Santana', endereco: 'Rua Voluntários da Pátria, 2100', bairro: 'Santana', materiais: ['computadores','celulares','baterias'], horario: 'Seg–Sex, 9h às 19h' },
+    { nome: 'EletroAmigo Itaim', endereco: 'Rua Funchal, 96', bairro: 'Itaim Bibi', materiais: ['baterias','eletrodomesticos'], horario: 'Seg–Sáb, 10h às 19h' }
+  ],
+  coletas: [
+    { nome: 'Marina Costa', bairro: 'Pinheiros', materiais: ['celulares','baterias'], volume: 'caixa', criadoEm: AGORA - 3.2 * 3600000 },
+    { nome: 'Rafael Lima', bairro: 'Tatuapé', materiais: ['computadores'], volume: 'grande', criadoEm: AGORA - 9 * 3600000 },
+    { nome: 'Júlia Ferraz', bairro: 'Moema', materiais: ['eletrodomesticos','baterias'], volume: 'caixas', criadoEm: AGORA - 26 * 3600000 }
+  ]
+};
+EcoDB.init(SEEDS);
+
+/* ============ FATOS DO TICKER ============ */
+const FATOS = [
+  'O mundo gerou 62 milhões de toneladas de e-waste em 2022 — só 22% foi reciclado',
+  '1 tonelada de placas de circuito contém mais ouro que 1 tonelada de minério',
+  'Um smartphone carrega até 60 minerais diferentes em seu interior',
+  'Baterias no lixo comum vazam chumbo e mercúrio no solo',
+  'Reciclar 1 milhão de celulares recupera mais de 34 kg de ouro',
+  'Eletrônicos bem descartados voltam à indústria como matéria-prima'
+];
+
+/* ============ HELPERS ============ */
+const $ = sel => document.querySelector(sel);
+const icons = () => lucide.createIcons();
+
+const tempoRelativo = ts => {
+  const d = Date.now() - ts;
+  if (d < 60000) return 'agora mesmo';
+  if (d < 3600000) return `há ${Math.floor(d / 60000)} min`;
+  if (d < 86400000) return `há ${Math.floor(d / 3600000)} h`;
+  return `há ${Math.floor(d / 86400000)} d`;
+};
+
+function showToast(msg, tipo = 'success') {
+  const stack = $('#toastStack');
+  const t = document.createElement('div');
+  t.className = 'toast' + (tipo === 'error' ? ' error' : '');
+  t.innerHTML = `<i data-lucide="${tipo === 'error' ? 'x' : 'check'}"></i><span>${msg}</span>`;
+  stack.appendChild(t);
+  icons();
+  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 320); }, 4200);
+}
+
+/* ============ TICKER ============ */
+(function montarTicker() {
+  const grupo = FATOS.map(f => `<span class="ticker-item"><i data-lucide="leaf"></i>${f}</span>`).join('');
+  $('#tickerTrack').innerHTML =
+    `<div class="ticker-group">${grupo}</div><div class="ticker-group" aria-hidden="true">${grupo}</div>`;
+})();
+
+/* ============ PONTOS DE COLETA (busca + filtro, lidos do banco) ============ */
+let PONTOS = [];
+let filtroCat = 'todos';
+let termoBusca = '';
+
+async function carregarPontos() {
+  PONTOS = await EcoDB.getAll('pontos');
+  renderPontos();
+  atualizarContagens();
+}
+
+function renderPontos() {
+  const lista = PONTOS.filter(p =>
+    (filtroCat === 'todos' || p.materiais.includes(filtroCat)) &&
+    (!termoBusca || (p.nome + ' ' + p.bairro + ' ' + p.endereco).toLowerCase().includes(termoBusca))
+  );
+  $('#pointsCount').textContent = lista.length;
+  $('#emptyState').hidden = lista.length > 0;
+
+  $('#pointsList').innerHTML = lista.map(p => `
+    <article class="point-row">
+      <div>
+        <h3>${p.nome}</h3>
+        <p class="point-addr"><i data-lucide="map-pin"></i>${p.endereco} — ${p.bairro}</p>
+      </div>
+      <ul class="point-tags">${p.materiais.map(m => `<li class="tag">${NOME_CATS[m]}</li>`).join('')}</ul>
+      <div class="point-side">
+        <span class="point-hours"><i data-lucide="clock"></i>${p.horario}</span>
+        <a class="point-route" target="_blank" rel="noopener"
+           href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.nome + ', ' + p.endereco + ', ' + p.bairro)}">
+           Traçar rota <i data-lucide="arrow-up-right"></i></a>
+      </div>
+    </article>`).join('');
+  icons();
+}
+
+ $('#searchInput').addEventListener('input', e => { termoBusca = e.target.value.trim().toLowerCase(); renderPontos(); });
+ $('#chips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip'); if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filtroCat = chip.dataset.cat;
+  renderPontos();
+});
+ $('#clearFilters').addEventListener('click', () => {
+  termoBusca = ''; filtroCat = 'todos';
+  $('#searchInput').value = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.cat === 'todos'));
+  renderPontos();
+});
+
+/* Cards de categoria → filtram os pontos e rolam até a seção */
+document.querySelectorAll('.cat-card').forEach(card => {
+  const ativar = () => {
+    filtroCat = card.dataset.cat;
+    document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.cat === filtroCat));
+    renderPontos();
+    $('#pontos').scrollIntoView({ behavior: 'smooth' });
+  };
+  card.addEventListener('click', ativar);
+  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ativar(); } });
+});
+
+function atualizarContagens() {
+  document.querySelectorAll('[data-cat-count]').forEach(el => {
+    const n = PONTOS.filter(p => p.materiais.includes(el.dataset.catCount)).length;
+    el.textContent = `${n} pontos aceitam`;
+  });
+}
+
+/* ============ AGENDAMENTOS (coleção "coletas" do banco) ============ */
+let ultimoId = null;
+
+async function renderRecentes() {
+  const coletas = (await EcoDB.getAll('coletas')).slice(0, 4);
+  $('#recentList').innerHTML = coletas.map(c => {
+    const primeiro = c.nome.split(' ')[0];
+    const inicial = c.nome.split(' ')[1]?.[0]?.toUpperCase() || '';
+    const mats = c.materiais.slice(0, 2).map(m => NOME_CATS[m]).join(', ');
+    const extra = c.materiais.length > 2 ? ` +${c.materiais.length - 2}` : '';
+    return `
+    <div class="recent-item">
+      <div class="recent-top">
+        <strong>${primeiro} ${inicial}.</strong>
+        ${c.id === ultimoId ? '<span class="badge-new">Novo</span>' : ''}
+      </div>
+      <p class="recent-meta">${c.bairro} — ${mats}${extra}</p>
+      <span class="recent-time"><i data-lucide="clock"></i>${tempoRelativo(c.criadoEm)}</span>
+    </div>`;
+  }).join('') || '<p class="recent-meta">Nenhum agendamento ainda. Seja o primeiro!</p>';
+  icons();
+}
+
+/* ============ FORMULÁRIO DE AGENDAMENTO ============ */
+const form = $('#coletaForm');
+
+/* máscara de telefone BR */
+ $('#fTel').addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+  if (v.length >= 11) v = v.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+  else if (v.length >= 7) v = v.replace(/(\d{2})(\d{4,5})(\d{0,4})/, '($1) $2-$3');
+  else if (v.length >= 3) v = v.replace(/(\d{2})(\d+)/, '($1) $2');
+  else if (v.length > 0) v = `(${v}`;
+  e.target.value = v;
+});
+/* data mínima = hoje */
+ $('#fData').min = new Date().toISOString().split('T')[0];
+
+/* remove erro ao digitar */
+form.addEventListener('input', e => e.target.closest('.field')?.classList.remove('error'));
+form.addEventListener('change', e => {
+  if (e.target.name === 'material' || e.target.type === 'checkbox')
+    $('[data-field="materiais"]').classList.remove('error');
+  e.target.closest('.field')?.classList.remove('error');
+});
+
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const dados = {
+    nome: $('#fNome').value,
+    whatsapp: $('#fTel').value,
+    endereco: $('#fEnd').value,
+    bairro: $('#fBairro').value,
+    data: $('#fData').value,
+    volume: $('#fVolume').value,
+    materiais: [...document.querySelectorAll('#pillsMateriais input:checked')].map(i => i.value)
+  };
+
+  let valido = true;
+  const marcar = (campo, cond) => {
+    const f = $(`[data-field="${campo}"]`);
+    f.classList.toggle('error', !cond);
+    if (!cond) valido = false;
+  };
+  marcar('nome', dados.nome.trim().length >= 3);
+  marcar('whatsapp', dados.whatsapp.replace(/\D/g, '').length >= 10);
+  marcar('endereco', dados.endereco.trim().length >= 8);
+  marcar('bairro', dados.bairro.trim().length >= 3);
+  marcar('data', !!dados.data);
+  marcar('materiais', dados.materiais.length > 0);
+
+  if (!valido) { showToast('Confira os campos destacados e tente novamente.', 'error'); return; }
+
+  /* grava no banco (troque EcoDB.add por addDoc() do Firestore para produção) */
+  const doc = await EcoDB.add('coletas', dados);
+  ultimoId = doc.id;
+
+  form.reset();
+  await Promise.all([renderRecentes(), atualizarStats()]);
+  showToast(`Coleta agendada, ${dados.nome.split(' ')[0]}! Entraremos em contato pelo WhatsApp para confirmar.`);
+});
+
+/* ============ ESTATÍSTICAS (base fixa + agregados do banco) ============ */
+async function atualizarStats() {
+  const coletas = await EcoDB.getAll('coletas');
+  const kgAgendado = coletas.reduce((s, c) => s + (PESOS[c.volume] || 0), 0);
+  const stats = {
+    pontos: PONTOS.length || (await EcoDB.getAll('pontos')).length,
+    kg: 1240 + kgAgendado,
+    coletas: 580 + coletas.length
+  };
+  $('#statPontos').dataset.count = stats.pontos;
+  $('#statKg').dataset.count = stats.kg;
+  $('#statColetas').dataset.count = stats.coletas;
+  $('#mediaColetas').textContent = stats.coletas.toLocaleString('pt-BR');
+}
+
+/* ============ CONTADORES ANIMADOS ============ */
+function animarContador(el) {
+  const alvo = parseFloat(el.dataset.count);
+  const dur = 1400, ini = performance.now();
+  const fmt = n => Math.round(n).toLocaleString('pt-BR');
+  const tick = t => {
+    const p = Math.min((t - ini) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = fmt(alvo * ease);
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+const obsCount = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) { animarContador(en.target); obsCount.unobserve(en.target); }
+  });
+}, { threshold: .4 });
+document.querySelectorAll('[data-count]').forEach(el => obsCount.observe(el));
+
+/* ============ REVEAL ON SCROLL ============ */
+const obsReveal = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('visible'); obsReveal.unobserve(en.target); } });
+}, { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => obsReveal.observe(el));
+
+/* ============ HEADER / MENU MOBILE ============ */
+addEventListener('scroll', () => $('#siteHeader').classList.toggle('scrolled', scrollY > 8), { passive: true });
+
+const toggle = $('#navToggle'), menu = $('#mobileMenu');
+toggle.addEventListener('click', () => {
+  const aberto = menu.classList.toggle('open');
+  toggle.classList.toggle('open', aberto);
+  toggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
+  document.body.style.overflow = aberto ? 'hidden' : '';
+});
+menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  menu.classList.remove('open'); toggle.classList.remove('open');
+  document.body.style.overflow = '';
+}));
+
+/* ============ NEWSLETTER ============ */
+ $('#newsForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const email = $('#newsEmail').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Digite um e-mail válido para receber as novidades.', 'error'); return; }
+  $('#newsEmail').value = '';
+  showToast('Inscrição confirmada! Você receberá o próximo boletim da rede.');
+});
+
+/* ============ INICIALIZAÇÃO ============ */
+(async function init() {
+  icons();
+  await carregarPontos();
+  await atualizarStats();
+  await renderRecentes();
+  icons();
+})();
+</script>
+</body>
+</html>
