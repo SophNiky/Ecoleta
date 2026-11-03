@@ -160,16 +160,26 @@ header.scrolled{border-color:var(--line);background:rgba(244,239,226,.96)}
 .chip{padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:600 .85rem 'Archivo';color:var(--gray);cursor:pointer;transition:.2s}
 .chip:hover{border-color:var(--green-bright);color:var(--green-800)}
 .chip.active{background:var(--green-800);border-color:var(--green-800);color:#F1ECDC}
+.point-filters{display:grid;gap:10px;margin-bottom:14px}
+.filter-caption{font:600 .75rem 'Archivo';color:var(--gray-2);text-transform:uppercase}
 .points-meta{color:var(--gray);font-size:.9rem;margin:22px 0 16px}
 .points-meta b{color:var(--ink)}
 .point-row{display:grid;grid-template-columns:1.15fr auto auto;gap:26px;align-items:center;padding:22px 26px;border:1px solid var(--line);border-radius:18px;margin-bottom:12px;transition:.25s}
 .point-row:hover{background:var(--card);border-color:#C9C2A8;box-shadow:0 12px 30px -18px rgba(30,51,37,.25)}
 .point-row h3{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:600}
+.point-kind{display:inline-block;margin-bottom:6px;font:600 .68rem 'Archivo';text-transform:uppercase;color:var(--green-800)}
 .point-addr{display:flex;align-items:center;gap:7px;color:var(--gray);font-size:.88rem;margin-top:5px}
 .point-addr svg{width:14px;height:14px;flex:none;color:var(--gray-2)}
+.point-detail,.point-note{margin-top:7px;color:var(--gray);font-size:.82rem;line-height:1.5}
+.point-note{color:#775D2C}
+.point-contact{color:var(--green-800);text-decoration:none}
 .point-tags{display:flex;gap:6px;flex-wrap:wrap;max-width:280px;justify-content:flex-end}
 .tag{font:600 .68rem 'Archivo';text-transform:uppercase;letter-spacing:.06em;background:var(--green-soft);color:var(--green-800);padding:5px 10px;border-radius:7px}
 .point-side{display:flex;flex-direction:column;align-items:flex-end;gap:9px}
+.point-actions{display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap}
+.point-action{display:inline-flex;align-items:center;gap:5px;font:600 .82rem 'Archivo';color:var(--green-800);text-decoration:none;white-space:nowrap}
+.point-action:hover{text-decoration:underline}
+.point-action svg{width:15px;height:15px;flex:none}
 .point-hours{display:flex;align-items:center;gap:6px;font-size:.82rem;color:var(--gray-2)}
 .point-hours svg{width:13px;height:13px}
 .point-route{display:inline-flex;align-items:center;gap:6px;font:600 .88rem 'Archivo';color:var(--green-800);text-decoration:none;border-bottom:1.5px solid transparent;transition:.2s}
@@ -367,7 +377,7 @@ footer h4{font:600 .76rem 'Archivo';text-transform:uppercase;letter-spacing:.16e
           <a href="#agendar" class="btn btn-ghost">Agendar coleta em casa <i data-lucide="truck"></i></a>
         </div>
         <div class="hero-stats" id="heroStats">
-          <div class="hstat"><b><span data-count="8" id="statPontos">0</span></b><span>pontos de coleta certificados</span></div>
+          <div class="hstat"><b><span data-count="8" id="statPontos">0</span></b><span>locais no catálogo</span></div>
           <div class="hstat"><b><span data-count="1240" id="statKg">0</span> kg</b><span>desviados de aterros sanitários</span></div>
           <div class="hstat"><b><span data-count="580" id="statColetas">0</span></b><span>coletas conectadas na plataforma</span></div>
         </div>
@@ -609,7 +619,7 @@ footer h4{font:600 .76rem 'Archivo';text-transform:uppercase;letter-spacing:.16e
           <span class="eyebrow">03 — Pontos de coleta</span>
           <h2 class="section-title">Um ponto de coleta<br>perto de você.</h2>
         </div>
-        <p class="section-desc">Todos os pontos da rede são verificados periodicamente pela equipe Ecoleta. Dados carregados direto do nosso banco.</p>
+        <p class="section-desc">Catálogo informativo de pontos de coleta e assistências técnicas. Os cadastros sugeridos vêm de fontes públicas e não indicam parceria com a Ecoleta; confirme o serviço e o recebimento do aparelho antes de ir.</p>
       </div>
       <div class="reveal">
         <div class="points-tools">
@@ -617,15 +627,22 @@ footer h4{font:600 .76rem 'Archivo';text-transform:uppercase;letter-spacing:.16e
             <i data-lucide="search"></i>
             <input type="text" id="searchInput" placeholder="Busque por bairro, nome ou endereço..." aria-label="Buscar pontos de coleta">
           </div>
-          <div class="chips" id="chips">
-            <button class="chip active" data-cat="todos">Todos</button>
-            <button class="chip" data-cat="computadores">Computadores</button>
-            <button class="chip" data-cat="celulares">Celulares</button>
-            <button class="chip" data-cat="baterias">Baterias</button>
-            <button class="chip" data-cat="eletrodomesticos">Eletrodomésticos</button>
+          <div class="point-filters">
+            <div class="chips" id="typeChips" aria-label="Tipo de estabelecimento">
+              <button class="chip active" data-type="todos">Todos os locais</button>
+              <button class="chip" data-type="coleta">Pontos de coleta</button>
+              <button class="chip" data-type="recuperacao">Recuperação de celulares</button>
+            </div>
+            <div class="chips" id="chips" aria-label="Materiais aceitos">
+              <button class="chip active" data-cat="todos">Todos os materiais</button>
+              <button class="chip" data-cat="computadores">Computadores</button>
+              <button class="chip" data-cat="celulares">Celulares</button>
+              <button class="chip" data-cat="baterias">Baterias</button>
+              <button class="chip" data-cat="eletrodomesticos">Eletrodomésticos</button>
+            </div>
           </div>
         </div>
-        <p class="points-meta"><b id="pointsCount">0</b> pontos encontrados para o seu filtro</p>
+        <p class="points-meta"><b id="pointsCount">0</b> locais encontrados para o seu filtro</p>
         <div id="pointsList"></div>
         <div class="empty" id="emptyState" hidden>
           <i data-lucide="search"></i>
@@ -842,7 +859,18 @@ const EcoDB = (() => {
   return {
     // Grava coleções iniciais apenas se ainda não existirem (equivale a um seed script)
     init(seeds) {
-      Object.entries(seeds).forEach(([col, docs]) => { if (!read(col)) write(col, docs); });
+      Object.entries(seeds).forEach(([col, docs]) => {
+        const current = read(col);
+        if (!current) { write(col, docs); return; }
+        const additions = docs.filter(doc => doc.id && !current.some(existing => existing.id === doc.id));
+        const updates = current.map(existing => {
+          const seed = docs.find(doc => doc.id && doc.id === existing.id);
+          if (!seed) return existing;
+          const missing = Object.fromEntries(Object.entries(seed).filter(([key]) => existing[key] === undefined));
+          return Object.keys(missing).length ? { ...existing, ...missing } : existing;
+        });
+        if (additions.length || updates.some((doc, index) => doc !== current[index])) write(col, [...updates, ...additions]);
+      });
     },
     // Equivalente a addDoc()
     async add(col, doc) {
@@ -869,7 +897,17 @@ const SEEDS = {
     { nome: 'CoopEletro Tatuapé', endereco: 'Rua Serra de Bragança, 640', bairro: 'Tatuapé', materiais: ['computadores','eletrodomesticos'], horario: 'Seg–Sáb, 9h às 18h' },
     { nome: 'Ponto Verde Butantã', endereco: 'Av. Vital Brazil, 1500', bairro: 'Butantã', materiais: ['computadores','baterias','eletrodomesticos'], horario: 'Seg–Sáb, 8h às 18h' },
     { nome: 'Ecotrevo Santana', endereco: 'Rua Voluntários da Pátria, 2100', bairro: 'Santana', materiais: ['computadores','celulares','baterias'], horario: 'Seg–Sex, 9h às 19h' },
-    { nome: 'EletroAmigo Itaim', endereco: 'Rua Funchal, 96', bairro: 'Itaim Bibi', materiais: ['baterias','eletrodomesticos'], horario: 'Seg–Sáb, 10h às 19h' }
+    { nome: 'EletroAmigo Itaim', endereco: 'Rua Funchal, 96', bairro: 'Itaim Bibi', materiais: ['baterias','eletrodomesticos'], horario: 'Seg–Sáb, 10h às 19h' },
+    { id: 'go-coleta-sukatech', tipo: 'coleta', nome: 'Sukatech – Ponto de Entrega Voluntária', endereco: 'Palácio Pedro Ludovico Teixeira, Praça Cívica', bairro: 'Setor Central, Goiânia - GO', materiais: ['celulares','baterias'], servicos: 'Recebimento de resíduos eletroeletrônicos, pilhas e baterias', horario: 'Confirme o horário antes de ir', observacao: 'Cadastro sugerido. Confirme se recebem celulares e quais itens são aceitos.' },
+    { id: 'go-coleta-desctec', tipo: 'coleta', nome: 'Desctec Natureza e Tecnologia', endereco: 'Avenida C-17, 27', bairro: 'Setor Sudoeste, Goiânia - GO', telefone: '(62) 3991-1716', materiais: ['celulares'], servicos: 'Coleta, logística reversa e destinação de resíduos eletrônicos', horario: 'Confirme o horário antes de ir', observacao: 'Cadastro sugerido. Confirme o recebimento de celulares antes de ir.' },
+    { id: 'go-coleta-sucateiro-tech', tipo: 'coleta', nome: 'Sucateiro Tech', endereco: 'Rua 115, 210', bairro: 'Setor Sul, Goiânia - GO', telefone: '(62) 98493-2350', whatsapp: '5562984932350', materiais: ['celulares'], servicos: 'Recebimento e destinação de eletrônicos antigos; retirada agendada pode estar disponível', horario: 'Confirme disponibilidade e retirada', observacao: 'Cadastro sugerido. Confirme o recebimento de celulares e agende a retirada, se necessário.' },
+    { id: 'go-coleta-tectudo', tipo: 'coleta', nome: 'TecTudo Lixo Eletrônico', endereco: 'Rua Presidente Lincoln', bairro: 'Jardim Presidente, Goiânia - GO', telefone: '(62) 99444-4033', whatsapp: '5562994444033', materiais: ['celulares'], servicos: 'Coleta, triagem e destinação de lixo eletrônico', horario: 'Confirme o horário antes de ir', observacao: 'Cadastro sugerido. Confirme o recebimento de celulares antes de ir.' },
+    { id: 'go-reparo-uv-cell', tipo: 'recuperacao', nome: 'UV CELL', endereco: 'Rua 210, 399, Camelódromo A — stands 62, 64 e 66', bairro: 'Setor Campinas, Goiânia - GO', telefone: '(62) 99303-3264', whatsapp: '5562993033264', materiais: [], servicos: 'Reparo em placas e troca de vidro', horario: 'Confirme o horário antes de ir', observacao: 'Assistência técnica. Não há confirmação de recebimento de aparelhos usados.', site: 'https://www.uvcell.com.br/' },
+    { id: 'go-reparo-smart-cell', tipo: 'recuperacao', nome: 'SMART CELL', endereco: 'Rua 210, 399, Camelódromo A — stands 48 e 49', bairro: 'Setor Campinas, Goiânia - GO', materiais: [], servicos: 'Assistência técnica de celulares', horario: 'Seg–Sex, 9h às 18h; sáb., 9h às 13h', observacao: 'Assistência técnica. Não há confirmação de recebimento de aparelhos usados.' },
+    { id: 'go-reparo-ifaststore', tipo: 'recuperacao', nome: 'iFastStore', endereco: 'Rua 210, 393, Camelódromo A — loja 50', bairro: 'Setor Campinas, Goiânia - GO', materiais: [], servicos: 'Assistência técnica, celulares e acessórios', horario: 'Seg–Sex, 8h às 18h; sáb., 8h às 16h', observacao: 'Assistência técnica. Não há confirmação de recebimento de aparelhos usados.' },
+    { id: 'go-reparo-first-mi', tipo: 'recuperacao', nome: 'First Mi Celulares', endereco: 'Avenida Anhanguera, 8044 — stand 90', bairro: 'Setor Campinas, Goiânia - GO', telefone: '(62) 99265-8801', whatsapp: '5562992658801', materiais: [], servicos: 'Troca de telas, reparo de conectores, diagnóstico e manutenção', horario: 'Confirme o horário antes de ir', observacao: 'Assistência técnica. Não há confirmação de recebimento de aparelhos usados.' },
+    { id: 'go-reparo-realeza-mobile', tipo: 'recuperacao', nome: 'Realeza Mobile', endereco: 'Avenida Anhanguera, 8035 — stand 13, Camelódromo OK', bairro: 'Setor Campinas, Goiânia - GO', telefone: '(62) 99323-3361', whatsapp: '5562993233361', materiais: [], servicos: 'Assistência técnica completa de celulares', horario: 'Confirme o horário antes de ir', observacao: 'Assistência técnica. Não há confirmação de recebimento de aparelhos usados.', site: 'https://realezamobile.com.br/' },
+    { id: 'go-reparo-adobe-cell', tipo: 'recuperacao', nome: 'Adobe Cell', endereco: 'Avenida Anhanguera, 8035 — stand 244, Camelódromo OK', bairro: 'Setor Campinas, Goiânia - GO', materiais: [], servicos: 'Assistência técnica, troca de telas, desbloqueio e venda de peças e acessórios', horario: 'Confirme o horário antes de ir', observacao: 'Assistência técnica. Não há confirmação de recebimento de aparelhos usados.' }
   ],
   coletas: [
     { nome: 'Marina Costa', bairro: 'Pinheiros', materiais: ['celulares','baterias'], volume: 'caixa', criadoEm: AGORA - 3.2 * 3600000 },
@@ -921,6 +959,7 @@ function showToast(msg, tipo = 'success') {
 /* ============ PONTOS DE COLETA (busca + filtro, lidos do banco) ============ */
 let PONTOS = [];
 let filtroCat = 'todos';
+let filtroTipo = 'todos';
 let termoBusca = '';
 
 async function carregarPontos() {
@@ -931,48 +970,76 @@ async function carregarPontos() {
 
 function renderPontos() {
   const lista = PONTOS.filter(p =>
-    (filtroCat === 'todos' || p.materiais.includes(filtroCat)) &&
-    (!termoBusca || (p.nome + ' ' + p.bairro + ' ' + p.endereco).toLowerCase().includes(termoBusca))
+    (filtroTipo === 'todos' || (p.tipo || 'coleta') === filtroTipo) &&
+    (filtroCat === 'todos' || ((p.tipo || 'coleta') === 'coleta' && p.materiais.includes(filtroCat))) &&
+    (!termoBusca || [p.nome, p.bairro, p.endereco, p.stand, p.servicos, p.telefone].filter(Boolean).join(' ').toLowerCase().includes(termoBusca))
   );
   $('#pointsCount').textContent = lista.length;
   $('#emptyState').hidden = lista.length > 0;
 
-  $('#pointsList').innerHTML = lista.map(p => `
+  $('#pointsList').innerHTML = lista.map(p => {
+    const whatsappUrl = p.whatsapp ? `https://wa.me/${p.whatsapp.replace(/\D/g, '')}` : '';
+    const instagramUrl = p.instagram
+      ? (/^https?:\/\//i.test(p.instagram) ? p.instagram : `https://www.instagram.com/${p.instagram.replace(/^@/, '')}/`)
+      : `https://www.instagram.com/explore/search/keyword/?q=${encodeURIComponent(p.nome)}`;
+    const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.nome + ', ' + p.endereco + ', ' + p.bairro)}`;
+    return `
     <article class="point-row">
       <div>
+        <span class="point-kind">${(p.tipo || 'coleta') === 'recuperacao' ? 'Recuperação de celulares' : 'Ponto de coleta'}</span>
         <h3>${p.nome}</h3>
         <p class="point-addr"><i data-lucide="map-pin"></i>${p.endereco} — ${p.bairro}</p>
+        ${p.servicos ? `<p class="point-detail">${p.servicos}</p>` : ''}
+        ${p.telefone ? `<p class="point-detail"><a class="point-contact" href="tel:${p.telefone.replace(/[^\d+]/g, '')}">${p.telefone}</a></p>` : ''}
+        ${p.observacao ? `<p class="point-note">${p.observacao}</p>` : ''}
       </div>
-      <ul class="point-tags">${p.materiais.map(m => `<li class="tag">${NOME_CATS[m]}</li>`).join('')}</ul>
+      <ul class="point-tags">${(p.materiais || []).map(m => `<li class="tag">${NOME_CATS[m]}</li>`).join('')}</ul>
       <div class="point-side">
         <span class="point-hours"><i data-lucide="clock"></i>${p.horario}</span>
-        <a class="point-route" target="_blank" rel="noopener"
-           href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.nome + ', ' + p.endereco + ', ' + p.bairro)}">
-           Traçar rota <i data-lucide="arrow-up-right"></i></a>
+        <div class="point-actions">
+          ${whatsappUrl ? `<a class="point-action" href="${whatsappUrl}" target="_blank" rel="noopener" aria-label="Falar com ${p.nome} pelo WhatsApp"><i data-lucide="message-circle"></i>WhatsApp</a>` : ''}
+          <a class="point-action" href="${instagramUrl}" target="_blank" rel="noopener" aria-label="${p.instagram ? `Instagram de ${p.nome}` : `Buscar ${p.nome} no Instagram`}"><i data-lucide="instagram"></i>${p.instagram ? 'Instagram' : 'Buscar Instagram'}</a>
+          <a class="point-action point-route" target="_blank" rel="noopener" href="${mapsUrl}" aria-label="Ver rota de ${p.nome} no Google Maps">
+            <i data-lucide="map-pin"></i>Google Maps</a>
+        </div>
       </div>
-    </article>`).join('');
+    </article>`;
+  }).join('');
   icons();
 }
 
  $('#searchInput').addEventListener('input', e => { termoBusca = e.target.value.trim().toLowerCase(); renderPontos(); });
+ $('#typeChips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip'); if (!chip) return;
+  document.querySelectorAll('#typeChips .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filtroTipo = chip.dataset.type;
+  if (filtroTipo === 'recuperacao') filtroCat = 'todos';
+  document.querySelectorAll('#chips .chip').forEach(c => c.classList.toggle('active', c.dataset.cat === filtroCat));
+  renderPontos();
+ });
  $('#chips').addEventListener('click', e => {
   const chip = e.target.closest('.chip'); if (!chip) return;
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('#chips .chip').forEach(c => c.classList.remove('active'));
   chip.classList.add('active');
   filtroCat = chip.dataset.cat;
+  if (filtroCat !== 'todos') filtroTipo = 'coleta';
+  document.querySelectorAll('#typeChips .chip').forEach(c => c.classList.toggle('active', c.dataset.type === filtroTipo));
   renderPontos();
 });
  $('#clearFilters').addEventListener('click', () => {
-  termoBusca = ''; filtroCat = 'todos';
+  termoBusca = ''; filtroCat = 'todos'; filtroTipo = 'todos';
   $('#searchInput').value = '';
-  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.cat === 'todos'));
+  document.querySelectorAll('#chips .chip').forEach(c => c.classList.toggle('active', c.dataset.cat === 'todos'));
+  document.querySelectorAll('#typeChips .chip').forEach(c => c.classList.toggle('active', c.dataset.type === 'todos'));
   renderPontos();
 });
 
 /* Cards de categoria → filtram os pontos e rolam até a seção */
 document.querySelectorAll('.cat-card').forEach(card => {
   const ativar = () => {
-    filtroCat = card.dataset.cat;
+    filtroCat = card.dataset.cat; filtroTipo = 'coleta';
+    document.querySelectorAll('#typeChips .chip').forEach(c => c.classList.toggle('active', c.dataset.type === 'coleta'));
     document.querySelectorAll('.chip').forEach(c => c.classList.toggle('active', c.dataset.cat === filtroCat));
     renderPontos();
     $('#pontos').scrollIntoView({ behavior: 'smooth' });
